@@ -31,8 +31,10 @@ public class ReadyQueue {
             return queue.get(0);
         }
     }
-    /// This Enqueue will insert the process to a it's right position
-    public void enqueue(Process process)
+
+    /// This Enqueue will insert the process to a it's right position according to it's Priorty
+
+    public void priortyEnqueue(Process process)
     {
         if (queue.isEmpty()) {
             queue.add(process);
@@ -50,6 +52,28 @@ public class ReadyQueue {
             }
         }
     }
+
+    /// This Enqueue will insert the process to a it's right position according to it's arrival time
+
+    public void arrivalEnqueue(Process process)
+    {
+        if (queue.isEmpty()) {
+            queue.add(process);
+        }
+        else if(!this.contain(process)){
+            int i;
+            for (i = 0; i < queue.size(); i++) {
+                if (queue.get(i).arrivalTime > process.arrivalTime) {
+                    queue.add(i,process);
+                    break;
+                }
+            }
+            if(i == queue.size() ){
+                queue.add(process);
+            }
+        }
+    }
+
 
     private boolean contain(Process process){
         for(Process p : queue){
