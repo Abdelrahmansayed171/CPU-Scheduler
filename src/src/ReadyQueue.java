@@ -1,6 +1,7 @@
 package src;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ReadyQueue {
     private ArrayList<Process> queue;
@@ -30,10 +31,9 @@ public class ReadyQueue {
             return queue.get(0);
         }
     }
-
+    /// This Enqueue will insert the process to a it's right position
     public void enqueue(Process process)
     {
-        //rasti kur radha eshte bosh
         if (queue.isEmpty()) {
             queue.add(process);
         }
@@ -45,7 +45,6 @@ public class ReadyQueue {
                     break;
                 }
             }
-            //rasti kur prioriteti i procesit qe shtohet eshte me i larte se i te gjithe proceseve
             if(i == queue.size() ){
                 queue.add(process);
             }
@@ -69,5 +68,10 @@ public class ReadyQueue {
     public Boolean isEmpty()
     {
         return (queue.size() == 0);
+    }
+    public void Print(){
+        for (int i = 0; i < queue.size(); i++) {
+            System.out.print(queue.get(i).name + " ");
+        }
     }
 }
