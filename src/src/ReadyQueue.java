@@ -106,13 +106,13 @@ public class ReadyQueue {
         queue.set(idx, process);
     }
 
-    public int getHighestPriorty() {
+    public int getHighestPriorty(int time) {
         int idx = 0;
 
         int min = queue.get(idx).priority;
 
         for (int i = 1; i < queue.size(); i++) {
-            if (queue.get(i).priority < min) {
+            if (queue.get(i).priority < min && queue.get(i).arrivalTime <= time) {
                 idx = i;
                 min = queue.get(i).priority;
             }
@@ -129,17 +129,16 @@ public class ReadyQueue {
             queue.add(0, temp);
         }
 
-
         return idx;
     }
 
-    public int getLeastBurst(){
+    public int getLeastBurst(int time){
         int idx = 0;
 
         int min = queue.get(idx).tempBurstTime;
 
         for (int i = 1; i < queue.size(); i++) {
-            if (queue.get(i).tempBurstTime < min) {
+            if (queue.get(i).tempBurstTime < min && queue.get(i).arrivalTime <= time) {
                 idx = i;
                 min = queue.get(i).tempBurstTime;
             }

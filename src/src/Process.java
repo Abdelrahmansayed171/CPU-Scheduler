@@ -6,8 +6,8 @@ public class Process {
     public int tempBurstTime;
     public int arrivalTime;
     public int priority;
-    public int quantum;
-    public int tempQuantum;
+    public double quantum;
+    public double tempQuantum;
     public int endBurstTime;
     public int waitingTime;
     public int turnAroundTime;
@@ -17,9 +17,11 @@ public class Process {
     public Process(String name, int burstTime, int arrivalTime, int priority, int quantum) {
         this.name = name;
         this.burstTime = burstTime;
+        this.tempBurstTime = burstTime;
         this.arrivalTime = arrivalTime;
         this.priority = priority;
         this.quantum = quantum;
+        this.tempQuantum = quantum;
     }
 
     public void setWaitingTime(int waitingTime) {
