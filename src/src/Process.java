@@ -3,13 +3,16 @@ package src;
 public class Process {
     public String name;
     public int burstTime;
+    public int tempBurstTime;
     public int arrivalTime;
     public int priority;
     public int quantum;
+    public int tempQuantum;
     public int endBurstTime;
     public int waitingTime;
     public int turnAroundTime;
     public boolean isFinished = false;
+    public boolean isBursted = false;
 
     public Process(String name, int burstTime, int arrivalTime, int priority, int quantum) {
         this.name = name;
@@ -30,4 +33,9 @@ public class Process {
             this.turnAroundTime = waitingTime + burstTime;
         }
     }
+
+    public void print(){
+        System.out.println(name + " " + tempBurstTime +" " + arrivalTime + " " + priority + " " +  tempQuantum);
+    }
+
 }
