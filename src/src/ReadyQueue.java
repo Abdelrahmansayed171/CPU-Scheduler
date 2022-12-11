@@ -32,7 +32,7 @@ public class ReadyQueue {
             queue.add(process);
         }
         else if (!this.contain(process)) {
-            queue.add(0, process);
+            queue.add(queue.size(), process);
         }
     }
 
@@ -94,8 +94,9 @@ public class ReadyQueue {
     /// Print the name of Processes in Ready Queue for Tracing
     public void Print() {
         for (int i = 0; i < queue.size(); i++) {
-            System.out.print(queue.get(i).name + " ");
+            System.out.print(queue.get(i).name + " " + queue.get(i).quantum + " >> ");
         }
+            System.out.println("\n________________________________________________________________\n");
     }
 
     public Process get(int idx) {
@@ -106,7 +107,7 @@ public class ReadyQueue {
         queue.set(idx, process);
     }
 
-    public int getHighestPriorty(int time) {
+    public int getHighestPriorty(int time, int newQuantum) {
         int idx = 0;
 
         int min = queue.get(idx).priority;
@@ -124,6 +125,9 @@ public class ReadyQueue {
             queue.remove(idx);
 
             Process process = this.dequeue();
+            process.quantum = newQuantum;
+            process.tempQuantum = newQuantum;
+
             this.enqueue(process);
 
             queue.add(0, temp);
@@ -132,7 +136,7 @@ public class ReadyQueue {
         return idx;
     }
 
-    public int getLeastBurst(int time){
+    public int getLeastBurst(int time, int newQuantum){
         int idx = 0;
 
         int min = queue.get(idx).tempBurstTime;
@@ -150,6 +154,8 @@ public class ReadyQueue {
             queue.remove(idx);
 
             Process process = this.dequeue();
+            process.quantum = newQuantum;
+            process.tempQuantum = newQuantum;
             this.enqueue(process);
 
             queue.add(0, temp);

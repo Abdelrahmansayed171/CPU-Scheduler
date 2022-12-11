@@ -1,13 +1,22 @@
 package src;
 
+import java.util.LinkedList;
+
 public class Main {
 
     public static void main(String[] args) {
-//        Process process1 = new Process("P1", 17, 0, 4, 7);
-//        Process process2 = new Process("P2", 6, 2, 7, 9);
-//        Process process3 = new Process("P3", 11, 5, 3, 4);
-//        Process process4 = new Process("P4", 4, 15, 6, 6);
-//        Process process5 = new Process("P5", 4, 15, 6, 6);
+        LinkedList carrier = new LinkedList <Process> ();
+        Process process1 = new Process("P1", 17, 0, 4, 7);
+        Process process2 = new Process("P2", 6, 2, 7, 9);
+        Process process3 = new Process("P3", 11, 5, 3, 4);
+        Process process4 = new Process("P4", 4, 15, 6, 6);
+        carrier.add(process1);
+        carrier.add(process2);
+        carrier.add(process3);
+        carrier.add(process4);
+
+        AG_Scheduling ag_scheduling = new AG_Scheduling(carrier);
+        ag_scheduling.start();
 //        ReadyQueue readyQueue = new ReadyQueue();
 //        readyQueue.priortyEnqueue(process1);
 //        readyQueue.priortyEnqueue(process3);

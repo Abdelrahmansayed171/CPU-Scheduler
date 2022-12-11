@@ -22,30 +22,50 @@ public class AG_Scheduling {
 
     public void start(){
         while (readyQueue.size() != 0){
-            int quantumSplit;
-            boolean priortyDone = false;
-            int idx = readyQueue.getHighestPriorty(timer);
+            int quarter = (int) Math.ceil((readyQueue.peek().quantum)/4.0);
+            int secQuarter = (int) Math.ceil((readyQueue.peek().quantum)/2.0);
+            secQuarter -= quarter;
+
+
+            timer += quarter;
+            readyQueue.peek().tempBurstTime -= quarter;
+            readyQueue.peek().tempQuantum -= quarter;
+
+
+            int tmp1 = (int) Math.ceil((readyQueue.peek().tempQuantum)/2.0);
+            int tmp2 = (int) readyQueue.peek().quantum;
+
+            int idx = readyQueue.getHighestPriorty(timer, tmp2 + tmp1);
             if(idx == 0){
-                quantumSplit = (int) Math.ceil((readyQueue.peek().quantum)/2.0);
-                priortyDone = true;
+                timer += secQuarter;
+                readyQueue.peek().tempBurstTime -= secQuarter;
+                readyQueue.peek().tempQuantum -= secQuarter;
+                tmp1 = (int) readyQueue.peek().tempQuantum;
+                tmp2 = (int) readyQueue.peek().quantum;
+                idx = readyQueue.getLeastBurst(timer, tmp2+tmp1);
+                if(idx == 0){
+                    readyQueue.peek().tempBurstTime -= readyQueue.peek().tempQuantum;
+                    if(readyQueue.peek().tempBurstTime <= 0){
+                        readyQueue.peek().quantum = 0;
+                        answer.add(readyQueue.dequeue());
+                    }
+                    else{
+                        Process tmp = readyQueue.dequeue();
+                        tmp.quantum *= 2;
+                        tmp.tempQuantum = tmp.quantum * 2;
+                        readyQueue.enqueue(tmp);
+                    }
+                }
+                else{
+                    readyQueue.Print();
+                    continue;
+                }
             }
             else{
-                quantumSplit = (int) Math.ceil((readyQueue.peek().quantum)/4.0);
-            }
-
-            timer += quantumSplit;
-            readyQueue.peek().tempBurstTime -= quantumSplit;
-            readyQueue.peek().tempQuantum -= quantumSplit;
-
-            if(!priortyDone){
-                readyQueue.peek().quantum += (int) Math.ceil((readyQueue.peek().tempQuantum)/2.0);
-                readyQueue.peek().tempQuantum = readyQueue.peek().quantum;
-                readyQueue.getHighestPriorty(timer);
+                readyQueue.Print();
                 continue;
             }
-            else{
 
-            }
         }
     }
 }
