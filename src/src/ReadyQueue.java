@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ReadyQueue {
-    private ArrayList<Process> queue;
+    private ArrayList <Process> queue;
 
     public ReadyQueue() {
         queue = new ArrayList<Process>();
@@ -14,7 +14,7 @@ public class ReadyQueue {
         Process p = null;
         if (!isEmpty()) {
             p = queue.get(0);
-            queue.remove(p);
+            queue.remove(0);
         }
         return p;
     }
@@ -119,9 +119,15 @@ public class ReadyQueue {
         }
 
         /// Here We are remove the highst Priorty Process and add it at the begining of the Queue
-        Process temp = queue.get(idx);
-        queue.remove(idx);
-        this.enqueue(temp);
+        if(idx != 0){
+            Process temp = queue.get(idx);
+            queue.remove(idx);
+
+            Process process = this.dequeue();
+            this.enqueue(process);
+
+            queue.add(0, temp);
+        }
 
 
         return idx;
@@ -140,12 +146,35 @@ public class ReadyQueue {
         }
 
         /// Here We are remove the highst Priorty Process and add it at the begining of the Queue
-        Process temp = queue.get(idx);
-        queue.remove(idx);
-        this.enqueue(temp);
+        if(idx != 0){
+            Process temp = queue.get(idx);
+            queue.remove(idx);
 
+            Process process = this.dequeue();
+            this.enqueue(process);
+
+            queue.add(0, temp);
+        }
 
         return idx;
     }
+    public int getLeastArrival(){
+        int idx = 0;
 
+        int min = queue.get(idx).arrivalTime;
+
+        for (int i = 1; i < queue.size(); i++) {
+            if (queue.get(i).arrivalTime < min) {
+                idx = i;
+                min = queue.get(i).arrivalTime;
+            }
+        }
+
+        /// Here We are remove the highst Priorty Process and add it at the begining of the Queue
+        Process temp = queue.get(idx);
+        queue.remove(idx);
+        queue.add(0,temp);
+
+        return idx;
+    }
 }
